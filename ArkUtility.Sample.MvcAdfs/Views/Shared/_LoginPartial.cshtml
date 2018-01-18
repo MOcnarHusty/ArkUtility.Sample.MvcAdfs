@@ -1,0 +1,21 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <text>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">
+                Hello, @(User?.Identity?.Name)
+            </li>
+            <li>
+                @Html.ActionLink("Log off", "LogOff", "Home")
+            </li>
+        </ul>
+    </text>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Log on", "LogOn", "Home", new {returnUrl = Request?.Url?.PathAndQuery}, new { id = "loginLink" })
+        </li>
+    </ul>
+}

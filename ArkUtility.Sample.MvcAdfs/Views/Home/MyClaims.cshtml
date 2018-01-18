@@ -1,0 +1,57 @@
+﻿@using System.Security.Claims
+@{
+    ViewBag.Title = "My Application Claims";
+    var claimsIdentity = ViewBag.ClaimsIdentity as ClaimsIdentity ?? new ClaimsIdentity();
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<h2>Welcome @ViewBag.DisplayName</h2>
+<h3>Values from identity.  </h3>
+<h5>An improperly configured ADFS connection may prevent this page from displaying.</h5>
+<h5>An improperly configured set of ADFS rules may result in more/less claims than expected.</h5>
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Value Type</th>
+            <th>Subject Name</th>
+            <th>Issuer</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ClaimsIdentity.IsAuthenticated</td>
+            <td>@claimsIdentity.IsAuthenticated</td>
+            <td>Boolean</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ClaimsIdentity.Name</td>
+            <td>@claimsIdentity.Name</td>
+            <td>String</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ClaimsIdentity.AuthenticationType</td>
+            <td>@claimsIdentity.AuthenticationType</td>
+            <td>String</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var claim in claimsIdentity.Claims)
+        {
+            <tr>
+                <td>@claim.Type </td>
+                <td>@claim.Value </td>
+                <td>@claim.ValueType</td>
+                <td>@claim.Subject.Name</td>
+                <td>@claim.Issuer</td>
+            </tr>
+        }
+    </tbody>
+</table>

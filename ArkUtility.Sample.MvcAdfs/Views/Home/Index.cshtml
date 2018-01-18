@@ -1,0 +1,64 @@
+﻿@using System.Configuration
+@using System.Security.Claims
+@{
+    ViewBag.Title = "Home Page";
+    var claimsIdentity = ViewBag.ClaimsIdentity as ClaimsIdentity ?? new ClaimsIdentity();
+}
+
+<div class="jumbotron">
+    <h1>ADFS Sample application</h1>
+    <p class="lead">This application uses OWIN and Microsoft Katana for authentication purposes.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Log on</h2>
+        <p>
+            By accessing a page that requires authorization or clicking on Login in the top right you can login to the web application.
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Logon","Home",new {returnUrl = Request?.Url?.PathAndQuery})">Login &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>View My Claims</h2>
+        <p>You can view claims for yourself here. If you have not logged in this should log you in as well.</p>
+        <p><a class="btn btn-default" href="@Url.Action("MyClaims","Home")">View Claims &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Log off</h2>
+        <p>You can logout and reset your Authentication cookie here.</p>
+        <p><a class="btn btn-default" href="@Url.Action("LogOff","Home")">Log Off &raquo;</a></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Implementer Notes</h2>
+        <div>If you are using IIS Express Ensure the following.
+            <ul>
+                <li>The IIS Express Self Signed Certificate is available in your machine's personal AND trusted store</li>
+                <li>That IIS Express is using the self signed certificate
+                    <ul>
+                        <li>From command prompt: C:\program Files (x86)\IIS Express\IisExpressAdminCmd.exe setupssl -url:https://urlToYourSite.com:portnumber/ -UseSelfSigned</li>
+                        <li>From Visual studio set the project web property to the https://urlToYourSite.com:portnumber/ </li>
+                        <li>From Visual studio set the project property to use SSL = true </li>
+                    </ul>
+                </li>
+            </ul>
+            Always Ensure the following
+            <ul>
+                <li>The ADFS team must setup relying party trust for your application urls and ports.</li>    
+                <li>The ADFS Certificate in your machine's trusted certificate store</li>    
+                <li>Ensure the proper relying trusts have been added to ADFS on the server, for development you may need a localhost and custom port entry.</li>
+                <li>Ensure ADFS has the proper Claim Rules</li>
+                <li>Ensure web.config has the proper information.</li>
+                <li>This was tested with both internal and external ADFS Authentication policies configured for Forms Authentication</li>
+            </ul>
+        </div>
+        <div>
+            Your current web application settings for ADFS configured in the web.config indicate:<br/>
+            MetadataAddress = @(ConfigurationManager.AppSettings["ida:ADFSMetadata"]) <br />
+            Wtrealm = @(ConfigurationManager.AppSettings["ida:Wtrealm"]) <br />
+            Wreply = @(ConfigurationManager.AppSettings["ida:Wreply"]) <br />
+        </div>
+        
+    </div>
+</div>
